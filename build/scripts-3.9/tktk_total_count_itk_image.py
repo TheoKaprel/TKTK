@@ -14,6 +14,8 @@ def calc_total_counts(image, slicej):
     
     array = itk.array_view_from_image(img)
 
+    print(array.shape)
+
     if slicej == None:
         total_counts = np.sum(array)
         print(f'Total counts in image {image}  :  {total_counts}!')

@@ -24,7 +24,8 @@ setuptools.setup(
         'tktk_resample_itk_image.py',
         'tktk_sum_itk_images.py',
         'tktk_total_count_itk_image.py',
-        'tktk_sinogram_info.py'
+        'tktk_sinogram_info.py',
+        'tktk_img_plot.py'
         ]
     )
 
