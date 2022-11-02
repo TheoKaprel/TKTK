@@ -23,7 +23,8 @@ setuptools.setup(
         'tktk_multiply_itk_image.py',
         'tktk_resample_itk_image.py',
         'tktk_sum_itk_images.py',
-        'tktk_total_count_itk_image.py'
+        'tktk_total_count_itk_image.py',
+        'tktk_sinogram_info.py'
         ]
     )
 
