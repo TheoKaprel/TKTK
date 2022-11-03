@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 import itk
 import click
+import numpy as np
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.command(context_settings=CONTEXT_SETTINGS)
@@ -14,13 +17,14 @@ def resample(input_file_name, output_spacing,output_size, output_file_name, inte
     input_spacing = itk.spacing(input_image)
     input_origin = itk.origin(input_image)
 
-    output_spacing3D = [float(output_spacing[k]) for k in range(3)]
+    output_spacing3D = np.array([float(output_spacing[k]) for k in range(3)])
     if output_size==None:
-        output_size3D = [int(input_spacing[k]*input_size[k]/output_spacing[k]) for k in range(3)]
+        output_size3D = [int(input_spacing[k]*input_size[k]/output_spacing3D[k]) for k in range(3)]
     else:
         output_size3D = [int(output_size[k]) for k in range(3)]
 
-    output_origin3D = [(-output_size3D[k] * output_spacing3D[k] + output_spacing3D[k]) / 2 for k in range(3)]
+    # output_origin3D = [(-output_size3D[k] * output_spacing3D[k] + output_spacing3D[k]) / 2 for k in range(3)]
+    output_origin3D = input_origin + (output_spacing3D - input_spacing)/2
 
     if interpolator=='linear':
         m_interpolator = itk.LinearInterpolateImageFunction.New(input_image)
