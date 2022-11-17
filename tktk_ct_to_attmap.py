@@ -57,7 +57,7 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
 
     ctArray = itk.array_from_image(ctImage)
     ctPositiveValueIndex = np.where(ctArray > 0)
-    ctNegativeValueIndex = np.where(ctArray < 0)
+    ctNegativeValueIndex = np.where(ctArray <= 0)
     attenuation = np.zeros(ctArray.shape)
     for i in range(nbPeak):
         attenuationTemp = np.zeros(ctArray.shape)
