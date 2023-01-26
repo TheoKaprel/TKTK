@@ -27,7 +27,8 @@ setuptools.setup(
         'tktk_sinogram_info.py',
         'tktk_img_plot.py',
         'tktk_threshold.py',
-        'tktk_center_image.py'
+        'tktk_center_image.py',
+        'tktk_rename_itk_image.py'
         ]
     )
 
