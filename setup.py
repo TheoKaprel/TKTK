@@ -29,7 +29,8 @@ setuptools.setup(
         'tktk_threshold.py',
         'tktk_center_image.py',
         'tktk_rename_itk_image.py',
-        'tktk_scatter_correction_dew.py'
+        'tktk_scatter_correction_dew.py',
+        'tktk_convert.py'
         ]
     )
 
