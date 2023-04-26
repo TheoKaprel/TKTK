@@ -26,7 +26,7 @@ def main():
         input_img = np.load(args.input)
         input_shape = input_img.shape
         input_shape = input_shape[::-1]
-        output_img = itk.image_from_array(input_img)
+        output_img = itk.image_from_array(input_img.astype(np.float32))
 
         output_spacing = np.array(spacing_)
         output_origin = [(-input_shape[k] * output_spacing[k] + output_spacing[k]) / 2 for k in range(3)]
