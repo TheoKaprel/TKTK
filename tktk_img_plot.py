@@ -14,9 +14,10 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option('-y', is_flag=True, default = False)
 @click.option('-z', is_flag=True, default = False)
 @click.option('--norm', is_flag=True, default = False)
-def print_hi(image, slice, profile, x, y, z, norm):
-    fig_img,ax_img_arr = plt.subplots(1,len(image))
-    # fig_img,ax_img_arr = plt.subplots(2,2)
+@click.option('--legend')
+def print_hi(image, slice, profile, x, y, z, norm, legend):
+    # fig_img,ax_img_arr = plt.subplots(1,len(image))
+    fig_img,ax_img_arr = plt.subplots(2,2)
     ax_img = ax_img_arr.ravel()
 
 
@@ -37,15 +38,20 @@ def print_hi(image, slice, profile, x, y, z, norm):
     vmin_ = 0
     vmax_ = max([np.max(sl) for sl in stack_slices])
 
+    if legend is None:
+        legend = image
+    else:
+        legend = legend.split(',')
 
     for k in range(len(image)):
         imsh = ax_img[k].imshow(stack_slices[k], vmin = vmin_, vmax = vmax_)
-        ax_img[k].set_title(image[k])
+        ax_img[k].set_title(legend[k])
+        ax_img[k].axis('off')
 
     cb = fig_img.colorbar(imsh, ax=ax_img)
     cb.remove()
 
-    plt.suptitle(f'Slice {slice}')
+    # plt.suptitle(f'Slice {slice}')
 
     if profile:
         fig_prof,ax_prof = plt.subplots()
