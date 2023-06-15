@@ -16,8 +16,11 @@ def center(input, output):
     input_spacing = np.array(itk.spacing(input_image))
 
     output_origin = [(-input_size[k]*input_spacing[k] + input_spacing[k])/2 for k in range(3)]
+    output_direction = np.eye(3)
+
 
     input_image.SetOrigin(output_origin)
+    input_image.SetDirection(output_direction)
     itk.imwrite(input_image, output)
 
 
