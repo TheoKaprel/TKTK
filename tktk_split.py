@@ -31,6 +31,9 @@ def main():
 
         img_splitted2.SetOrigin(output_splitted2_origin)
         img_splitted2.SetDirection(output_direction)
+    else:
+        img_splitted1.SetDirection(img.GetDirection())
+        img_splitted2.SetDirection(img.GetDirection())
 
     itk.imwrite(img_splitted1, args.outputs[0])
     itk.imwrite(img_splitted2, args.outputs[1])
