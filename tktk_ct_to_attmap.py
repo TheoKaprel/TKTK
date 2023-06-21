@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 
 import itk
-import click
 import numpy as np
 import sys
+import argparse
 
-
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-@click.command(context_settings=CONTEXT_SETTINGS)
-@click.option('--ct', help = 'Input ct image in Hounsfield Units (HU)', required = True)
-@click.option('-o', '--output', 'output_attmap_fn', required = True, help = "Output attenuation map filename")
-@click.option('--rn','radionuclide', help = 'Radionuclide : Tc99m, Lu77', default = 'Tc99m')
 def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
+
     """
 
     Converts a CT (HU) into an attenuation map (in mm^-1)
@@ -73,4 +68,9 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
 
 
 if __name__=='__main__':
-    convert_ct_to_attmap()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ct")
+    parser.add_argument("-o", "--output", required=True)
+    parser.add_argument("--rn", '--radionuclide', help='Radionuclide : Tc99m, Lu77', default='Tc99m')
+    args = parser.parse_args()
+    convert_ct_to_attmap(ct=args.ct, output_attmap_fn=args.output, radionuclide=args.radionuclide)
