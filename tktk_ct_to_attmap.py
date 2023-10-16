@@ -71,6 +71,6 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--ct")
     parser.add_argument("-o", "--output", required=True)
-    parser.add_argument("--rn", '--radionuclide', help='Radionuclide : Tc99m, Lu77', default='Tc99m')
+    parser.add_argument("-rn", '--radionuclide', help='Radionuclide : Tc99m, Lu77', default='Tc99m')
     args = parser.parse_args()
     convert_ct_to_attmap(ct=args.ct, output_attmap_fn=args.output, radionuclide=args.radionuclide)

@@ -34,7 +34,9 @@ setuptools.setup(
         'tktk_image_info.py',
         'tktk_split.py',
         'tktk_ct_recons_to_rtk_system.py',
-        'tktk_merge.py'
+        'tktk_merge.py',
+        'tktk_normalize.py',
+        'tktk_conv2d_params.py'
         ]
     )
 
