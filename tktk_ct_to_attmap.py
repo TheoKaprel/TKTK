@@ -5,7 +5,7 @@ import numpy as np
 import sys
 import argparse
 
-def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
+def convert_ct_to_attmap(ctImage, radionuclide):
 
     """
 
@@ -28,7 +28,7 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
         weightPeak = [0.062, 0.104]
 
 
-    ctImage = itk.imread(ct)
+
 
     if ctImage.GetImageDimension() != 3:
         print("Image dimension (" + str(ctImage.GetImageDimension()) + ") is not 3")
@@ -63,8 +63,7 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
     attenuationImage = itk.image_from_array(attenuation)
     attenuationImage.CopyInformation(ctImage)
 
-    itk.imwrite(attenuationImage, output_attmap_fn)
-    print(f'Output attenuation map in {output_attmap_fn}')
+    return attenuationImage
 
 
 if __name__=='__main__':
@@ -73,4 +72,9 @@ if __name__=='__main__':
     parser.add_argument("-o", "--output", required=True)
     parser.add_argument("-rn", '--radionuclide', help='Radionuclide : Tc99m, Lu77', default='Tc99m')
     args = parser.parse_args()
-    convert_ct_to_attmap(ct=args.ct, output_attmap_fn=args.output, radionuclide=args.radionuclide)
+
+    ctImage = itk.imread(args.ct)
+    attenuationImage=convert_ct_to_attmap(ctImage=ctImage,radionuclide=args.radionuclide)
+
+    itk.imwrite(attenuationImage, args.output)
+    print(f'Output attenuation map in {args.output}')

@@ -1,28 +1,31 @@
 #!/usr/bin/env python3
 
-import click
-import numpy as np
+
+
+import argparse
 import itk
+import gatetools
+import numpy as np
 
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+def center(input_image):
 
-
-@click.command(context_settings=CONTEXT_SETTINGS)
-@click.option('-i','--input')
-@click.option('-o','--output')
-def center(input, output):
-    input_image = itk.imread(input)
     input_size = np.array(itk.size(input_image))
     input_spacing = np.array(itk.spacing(input_image))
 
     output_origin = [(-input_size[k]*input_spacing[k] + input_spacing[k])/2 for k in range(3)]
     output_direction = np.eye(3)
 
-
     input_image.SetOrigin(output_origin)
     input_image.SetDirection(output_direction)
-    itk.imwrite(input_image, output)
+    return input_image
 
 
 if __name__ == '__main__':
-    center()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", "-i")
+    parser.add_argument("--output", "-o")
+    args = parser.parse_args()
+
+    input_image = itk.imread(args.input)
+    output_img = center(input_image=input_image)
+    itk.imwrite(output_img, args.output)
