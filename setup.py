@@ -36,7 +36,8 @@ setuptools.setup(
         'tktk_ct_recons_to_rtk_system.py',
         'tktk_merge.py',
         'tktk_normalize.py',
-        'tktk_conv2d_params.py'
+        'tktk_conv2d_params.py',
+        'tktk_center_difference.py'
         ]
     )
 

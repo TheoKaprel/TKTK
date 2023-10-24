@@ -23,7 +23,7 @@ def print_hi(image, slice, profile, x, y, z, norm, legend):
         n_lines,n_col = 1,2
     else:
         n_lines = 2
-        n_col = n_img//2
+        n_col = n_img//2 if n_img%2==0 else n_img//2+1
 
 
     fig_img,ax_img_arr = plt.subplots(n_lines,n_col)
