@@ -37,7 +37,9 @@ setuptools.setup(
         'tktk_merge.py',
         'tktk_normalize.py',
         'tktk_conv2d_params.py',
-        'tktk_center_difference.py'
+        'tktk_center_difference.py',
+        'tktk_get_volume_from_labels.py'
+
         ]
     )
 
