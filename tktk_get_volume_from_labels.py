@@ -21,8 +21,6 @@ def main():
     print(f'Voxel volume : {volume_voxel} mm^3')
 
 
-
-
     if args.label is None:
         l_labels= list(np.unique(labels_np))
     else:

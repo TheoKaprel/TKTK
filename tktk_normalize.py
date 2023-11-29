@@ -20,7 +20,8 @@ def main():
 
         if args.norm=="sum":
             img_array = img_array/img_array.sum()
-
+        elif args.norm=="act":
+            img_array = img_array/img_array.sum() * args.act
 
         new_img_itk=itk.image_from_array(img_array)
         new_img_itk.CopyInformation(img_itk)
@@ -33,7 +34,8 @@ def main():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("inputs", nargs='+')
-    parser.add_argument("--norm",choices=['sum'])
+    parser.add_argument("--norm",choices=['sum', 'act'])
+    parser.add_argument("--act",type=float)
     args = parser.parse_args()
 
     main()
