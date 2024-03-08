@@ -38,7 +38,14 @@ setuptools.setup(
         'tktk_normalize.py',
         'tktk_conv2d_params.py',
         'tktk_center_difference.py',
-        'tktk_get_volume_from_labels.py'
+        'tktk_get_volume_from_labels.py',
+        'tktk_activity_decay.py',
+        'tktk_decay_correction.py',
+        'tktk_make_src_from_labels.py',
+        'tktk_3d_fwhm.py',
+        'tktk_combine_masks.py',
+        'tktk_unit_converter.py',
+        'tktk_convert_dtypes.py'
 
         ]
     )

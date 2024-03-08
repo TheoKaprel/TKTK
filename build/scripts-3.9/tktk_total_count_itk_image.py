@@ -1,4 +1,4 @@
-#!/export/home/tkaprelian/Software/miniconda3/bin/python
+#!python
 
 import itk
 import click
@@ -13,8 +13,6 @@ def calc_total_counts(image, slicej):
     img = itk.imread(image)
     
     array = itk.array_view_from_image(img)
-
-    print(array.shape)
 
     if slicej == None:
         total_counts = np.sum(array)

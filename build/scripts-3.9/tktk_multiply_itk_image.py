@@ -1,4 +1,4 @@
-#!/export/home/tkaprelian/Software/miniconda3/bin/python
+#!python
 
 
 import itk

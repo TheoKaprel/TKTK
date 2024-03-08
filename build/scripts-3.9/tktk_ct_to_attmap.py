@@ -1,17 +1,12 @@
-#!/export/home/tkaprelian/Software/miniconda3/bin/python
+#!python
 
 import itk
-import click
 import numpy as np
 import sys
+import argparse
 
+def convert_ct_to_attmap(ctImage, radionuclide):
 
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-@click.command(context_settings=CONTEXT_SETTINGS)
-@click.option('--ct', help = 'Input ct image in Hounsfield Units (HU)', required = True)
-@click.option('-o', '--output', 'output_attmap_fn', required = True, help = "Output attenuation map filename")
-@click.option('--rn','radionuclide', help = 'Radionuclide : Tc99m, Lu77', default = 'Tc99m')
-def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
     """
 
     Converts a CT (HU) into an attenuation map (in mm^-1)
@@ -27,13 +22,13 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
         # One Energy peak : 140.5 keV
         spectCoeff = 1/10 * np.array([0.0001668,0.15459051,0.28497715])
         weightPeak = [1]
-    elif radionuclide.lower()=='lu77':
+    elif radionuclide.lower()=='lu177':
         # Two Energy peaks:  112.95 keV (weight=0.062) and 208.37 keV (weight=0.104)
         spectCoeff = 1/10 * np.array([0.00017856, 0.16529103, 0.31934538, 0.00014657, 0.13597229, 0.24070651])
         weightPeak = [0.062, 0.104]
 
 
-    ctImage = itk.imread(ct)
+
 
     if ctImage.GetImageDimension() != 3:
         print("Image dimension (" + str(ctImage.GetImageDimension()) + ") is not 3")
@@ -57,7 +52,7 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
 
     ctArray = itk.array_from_image(ctImage)
     ctPositiveValueIndex = np.where(ctArray > 0)
-    ctNegativeValueIndex = np.where(ctArray < 0)
+    ctNegativeValueIndex = np.where(ctArray <= 0)
     attenuation = np.zeros(ctArray.shape)
     for i in range(nbPeak):
         attenuationTemp = np.zeros(ctArray.shape)
@@ -68,9 +63,18 @@ def convert_ct_to_attmap(ct, output_attmap_fn, radionuclide):
     attenuationImage = itk.image_from_array(attenuation)
     attenuationImage.CopyInformation(ctImage)
 
-    itk.imwrite(attenuationImage, output_attmap_fn)
-    print(f'Output attenuation map in {output_attmap_fn}')
+    return attenuationImage
 
 
 if __name__=='__main__':
-    convert_ct_to_attmap()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ct")
+    parser.add_argument("-o", "--output", required=True)
+    parser.add_argument("-rn", '--radionuclide', help='Radionuclide : Tc99m, Lu77', default='Tc99m')
+    args = parser.parse_args()
+
+    ctImage = itk.imread(args.ct)
+    attenuationImage=convert_ct_to_attmap(ctImage=ctImage,radionuclide=args.radionuclide)
+
+    itk.imwrite(attenuationImage, args.output)
+    print(f'Output attenuation map in {args.output}')
