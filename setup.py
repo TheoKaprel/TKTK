@@ -45,8 +45,8 @@ setuptools.setup(
         'tktk_3d_fwhm.py',
         'tktk_combine_masks.py',
         'tktk_unit_converter.py',
-        'tktk_convert_dtypes.py'
-
+        'tktk_convert_dtypes.py',
+        'tktk_pad.py'
         ]
     )
 
