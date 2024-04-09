@@ -40,10 +40,10 @@ def main():
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-i","--input", nargs="*")
     parser.add_argument("-o","--output", nargs="*")
-    parser.add_argument("--spacing", type = str)
+    parser.add_argument("--spacing", type = str, default = "1,1,1", help = "spacing of the output itk image")
     args = parser.parse_args()
 
     main()

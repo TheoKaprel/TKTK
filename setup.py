@@ -47,7 +47,8 @@ setuptools.setup(
         'tktk_combine_masks.py',
         'tktk_unit_converter.py',
         'tktk_convert_dtypes.py',
-        'tktk_pad.py'
+        'tktk_pad.py',
+        'tktk_plot_activity_per_organs.py'
         ]
     )
 
