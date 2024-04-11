@@ -48,7 +48,10 @@ setuptools.setup(
         'tktk_unit_converter.py',
         'tktk_convert_dtypes.py',
         'tktk_pad.py',
-        'tktk_plot_activity_per_organs.py'
+        'tktk_plot_activity_per_organs.py',
+        'tktk_make_geom_from_dicom.py',
+        'tktk_add_projs.py',
+        'tktk_merge_projs.py'
         ]
     )
 
