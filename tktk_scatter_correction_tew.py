@@ -11,7 +11,7 @@ def main():
     ipeak1,ipeak2 = [int(i) for i in args.ipeak.split(',')]
     iright1,iright2 = [int(i) for i in args.iright.split(',')]
     wleft = args.wleft
-    wbase = args.wbase
+    wpeak = args.wpeak
     wright = args.wright
 
 
@@ -22,7 +22,7 @@ def main():
     base_window_counts = input_array[ipeak1:ipeak2,:,:]
     right_window_counts = input_array[iright1:iright2,:,:]
 
-    scatter_estimate = (left_window_counts/wleft + right_window_counts/wright) * wbase/2
+    scatter_estimate = (left_window_counts/wleft + right_window_counts/wright) * wpeak/2
 
     primary_estimate = base_window_counts - scatter_estimate
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-i","--input", type = str, required = True )
     parser.add_argument("--wleft", type = float, default=8.929980000000004, help = "width of the lower EW")
-    parser.add_argument("--wbase", type = float, default=41.67324,help = "width of the primary EW")
+    parser.add_argument("--wpeak", type = float, default=41.67324,help = "width of the primary EW")
     parser.add_argument("--wright", type = float, default=12.063306315789474,help = "width of the upper EW")
     parser.add_argument("--ileft", type = str, default="360,480",help = "indices of the lower EW")
     parser.add_argument("--ipeak",type = str, default="480,600",help = "indices of the primary EW")

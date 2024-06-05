@@ -24,9 +24,10 @@ def convert_ct_to_attmap(ctImage, radionuclide):
         weightPeak = [1]
     elif radionuclide.lower()=='lu177':
         # Two Energy peaks:  112.95 keV (weight=0.062) and 208.37 keV (weight=0.104)
-        spectCoeff = 1/10 * np.array([0.00017856, 0.16529103, 0.31934538, 0.00014657, 0.13597229, 0.24070651])
-        weightPeak = [0.062, 0.104]
-
+        # spectCoeff = 1/10 * np.array([0.00017856, 0.16529103, 0.31934538, 0.00014657, 0.13597229, 0.24070651])
+        # weightPeak = [0.062, 0.104]
+        spectCoeff = 1/10 * np.array([0.00014657, 0.13597229, 0.24070651])
+        weightPeak = [1]
 
 
 
@@ -70,7 +71,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--ct")
     parser.add_argument("-o", "--output", required=True)
-    parser.add_argument("-rn", '--radionuclide', help='Radionuclide : Tc99m, Lu77', default='Tc99m')
+    parser.add_argument("-rn", '--radionuclide', help='Radionuclide : Tc99m, Lu177', default='Tc99m')
     args = parser.parse_args()
 
     ctImage = itk.imread(args.ct)

@@ -11,17 +11,16 @@ def main():
 
     out = None
 
-    for angle in range(args.n):
-        file_angle = (args.inputs).replace("%d", f'{angle}')
-        if os.path.isfile(file_angle):
-            img = itk.imread(file_angle)
+    for i in range(args.n):
+        file_i = (args.inputs).replace("%d", f'{i}')
+        if os.path.isfile(file_i):
+            img = itk.imread(file_i)
             arr = itk.array_from_image(img)
             if out is not None:
                 out += arr
             else:
                 out = arr
-
-            print(angle)
+            print(i)
     out_img = itk.image_from_array(out)
     out_img.CopyInformation(img)
     itk.imwrite(out_img, args.output)
@@ -29,9 +28,9 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--inputs")
-    parser.add_argument("-n", type=int)
-    parser.add_argument("--output")
+    parser.add_argument("--inputs", help="should contain a pourcent-d to replace with integer")
+    parser.add_argument("-n", type=int, help="nb of inputs to add together")
+    parser.add_argument("--output", help="output filename")
     args = parser.parse_args()
 
     main()
