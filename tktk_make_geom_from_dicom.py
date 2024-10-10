@@ -11,7 +11,6 @@ from itk import RTK as rtk
 def main():
     print(args)
     ds = pydicom.dcmread(args.input_dicom)
-    print(ds)
 
     radialPosition1,radialPosition2 = [],[]
     radial_pos_detect_1 = ds[0x54, 0x22][0][0x18, 0x1142].value._list
@@ -25,13 +24,13 @@ def main():
     for v in radial_pos_detect_2:
         radialPosition2.append(float(v))
     first_angle_1 = ds[0x54,0x22][0][0x54, 0x0200].value
-    print(f"radial positions 1 : starting at {first_angle_1}")
+    # print(f"radial positions 1 : starting at {first_angle_1}")
     first_angle_2 = ds[0x54,0x22][1][0x54, 0x0200].value
-    print(f"radial positions 2 : starting at {first_angle_2}")
+    # print(f"radial positions 2 : starting at {first_angle_2}")
 
     angular_step = float(ds[0x54,0x52][0][0x18, 0x1144].value)
 
-    print(f"angular step = {angular_step}")
+    # print(f"angular step = {angular_step}")
 
     angle_list = [(first_angle_1+k*angular_step)%360 for k in range(len(radial_pos_detect_1))]+ [(first_angle_2+k*angular_step)%360 for k in range(len(radial_pos_detect_2))]
 
@@ -61,9 +60,6 @@ def main():
         theta2 = [a * np.pi / 180 for a in angle_list[len(radial_pos_detect_1):(len(radial_pos_detect_1)+len(radial_pos_detect_2))]]
         ax.plot(theta1, radial_pos_detect_1, c = "blue")
         ax.plot(theta2, radial_pos_detect_2, c = 'orange')
-      # ax.set_rmax(2)
-      # ax.set_rticks([0.5, 1, 1.5, 2])  # Less radial ticks
-      # ax.set_rlabel_position(-22.5)  # Move radial labels away from plotted line
         ax.grid(True)
         ax.set_title("A line plot on a polar axis", va='bottom')
         plt.show()

@@ -53,7 +53,11 @@ setuptools.setup(
         'tktk_add_projs.py',
         'tktk_merge_projs.py',
         'tktk_make_psf.py',
-        'tktk_convolve.py'
+        'tktk_convolve.py',
+        "tktk_tumour_delineation_threshold.py",
+        'tktk_merge_4d.py',
+        'tktk_get_ct_infos_from_dicoms.py',
+        'tktk_segmentation_confidence_connected.py'
         ]
     )
 

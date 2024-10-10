@@ -17,7 +17,12 @@ def main():
         print("ERROR: spacing error. Ex: --spacing 13.12,13.12,17.89")
         exit(0)
 
-    for input,output in zip(args.input, args.output):
+    if args.output is None:
+        list_output = [toto.replace(".npy", ".mhd") for toto in args.input]
+    else:
+        list_output = args.output
+
+    for input,output in zip(args.input, list_output):
         input_ext = get_extension(input)
         output_ext = get_extension(output)
 

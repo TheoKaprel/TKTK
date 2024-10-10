@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--inputs", help="should contain a pourcent-d to replace with integer")
     parser.add_argument("-n", type=int, help="nb of inputs to add together")
-    parser.add_argument("--output", help="otuput filename")
+    parser.add_argument("--output", help="output filename")
     args = parser.parse_args()
 
     main()
