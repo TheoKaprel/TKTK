@@ -57,7 +57,11 @@ setuptools.setup(
         "tktk_tumour_delineation_threshold.py",
         'tktk_merge_4d.py',
         'tktk_get_ct_infos_from_dicoms.py',
-        'tktk_segmentation_confidence_connected.py'
+        'tktk_segmentation_confidence_connected.py',
+        'tktk_combine_labels.py',
+        "tktk_fft3d.py",
+        "tktk_copy_information_itk.py",
+        "tktk_region_growing_delineation.py"
         ]
     )
 

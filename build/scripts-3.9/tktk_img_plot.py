@@ -1,21 +1,12 @@
 #!python
 
-import click
+import argparse
 import itk
 import numpy as np
 import matplotlib.pyplot as plt
 
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-@click.command(context_settings=CONTEXT_SETTINGS)
-@click.option('-i', '--image', multiple = True, help = 'Input image')
-@click.option('-s','--slice', type = int, multiple=True)
-@click.option('-p','--profile', type = int)
-@click.option('-x', is_flag=True, default = False)
-@click.option('-y', is_flag=True, default = False)
-@click.option('-z', is_flag=True, default = False)
-@click.option('--norm', is_flag=True, default = False)
-@click.option('--legend')
-def print_hi(image, slice, profile, x, y, z, norm, legend):
+
+def print_hi(image, slice, profile, axis, norm, legend):
     n_img = len(image)*len(slice)
     if n_img==1:
         n_lines,n_col = 1,1
@@ -31,6 +22,7 @@ def print_hi(image, slice, profile, x, y, z, norm, legend):
 
 
     stack_slices = []
+    # legend=[]
     for slice_ in slice:
         for img in (image):
             print(img)
@@ -38,21 +30,17 @@ def print_hi(image, slice, profile, x, y, z, norm, legend):
             if norm:
                 img_array = img_array / np.sum(img_array)
 
-            if z:
+            if axis=="z":
                 stack_slices.append(img_array[slice_,:,:].astype(np.float32))
-            elif x:
+            elif axis=="y":
                 stack_slices.append(img_array[:, slice_, :].astype(np.float32))
-            elif y:
+            elif axis=="x":
                 stack_slices.append(img_array[:, :, slice_].astype(np.float32))
-
+            # legend.append(img)
     # vmin_ = min([np.min(sl) for sl in stack_slices])
     vmin_ = 0
     vmax_ = max([np.max(sl) for sl in stack_slices])
 
-    if legend is None:
-        legend = image
-    else:
-        legend = legend.split(',')
     print(legend)
     for k in range(len(stack_slices)):
         imsh = ax_img[k].imshow(stack_slices[k], vmin = vmin_, vmax = vmax_)
@@ -69,11 +57,14 @@ def print_hi(image, slice, profile, x, y, z, norm, legend):
     # plt.suptitle(f'Slice {slice}')
 
     if profile:
+        color = ["dimgrey","black", "blue", "blueviolet", "#f9bc08", "orangered", "#ff9408"]
         fig_prof,ax_prof = plt.subplots()
-        for k in range(len(image)):
-            ax_prof.plot(stack_slices[k][profile,:], '-',label = legend[k])
+        for k in range(len(stack_slices)):
+            ax_prof.plot(stack_slices[k][profile,:], '-',label = legend[k], color = color[k], linewidth = 1.5)
 
-        plt.legend()
+        ax_prof.set_xlabel("Pixels", fontsize = 20)
+        ax_prof.set_ylabel("Reconstructed Counts", fontsize = 20)
+        plt.legend(fontsize=20)
 
 
     plt.show()
@@ -88,4 +79,23 @@ def read_to_array(filename):
         return np.load(filename)
 
 if __name__ == '__main__':
-    print_hi()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i","--images",type = str, nargs = "*")
+    parser.add_argument("-s","--slice",type = int, nargs = "*")
+    parser.add_argument("-p","--profile",type = int)
+    parser.add_argument("--axis", choices = ["x", "y", "z"])
+    parser.add_argument("--norm", action="store_true")
+    parser.add_argument("--legend",type = str, nargs = "*")
+    args = parser.parse_args()
+    print_hi(image = args.images, slice=args.slice, profile=args.profile,axis= args.axis, norm=args.norm, legend=args.legend)
+
+# CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+# @click.command(context_settings=CONTEXT_SETTINGS)
+# @click.option('-i', '--image', multiple = True, help = 'Input image')
+# @click.option('-s','--slice', type = int, multiple=True)
+# @click.option('-p','--profile', type = int)
+# @click.option('-x', is_flag=True, default = False)
+# @click.option('-y', is_flag=True, default = False)
+# @click.option('-z', is_flag=True, default = False)
+# @click.option('--norm', is_flag=True, default = False)
+# @click.option('--legend')
